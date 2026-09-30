@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Shopping Cart</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+<nav>
+
+    <h2>🛒 My Cart</h2>
+
+    <a href="/menu">
+        Continue Shopping
+    </a>
+
+</nav>
+
+
+<div class="cart-container">
+
+    <h1>Your Order</h1>
+
+    <div id="cartItems"></div>
+
+    <h2>
+        Total: ₹<span id="total">0</span>
+    </h2>
+
+
+    <form action="/place_order"
+          method="POST"
+          onsubmit="prepareOrder()">
+
+        <input type="hidden"
+               name="items"
+               id="itemsInput">
+
+        <input type="hidden"
+               name="total"
+               id="totalInput">
+
+
+        <button type="submit">
+            Place Order
+        </button>
+
+    </form>
+
+</div>
+
+
+<script>
+
+let cart =
+JSON.parse(localStorage.getItem("cart")) || [];
+
+
+// DISPLAY CART
+
+function displayCart() {
+
+    let container =
+        document.getElementById("cartItems");
+
+    let total = 0;
+
+    container.innerHTML = "";
+
+
+    if (cart.length === 0) {
+
+        container.innerHTML =
+            "<p>Your cart is empty.</p>";
+
+        return;
+    }
+
+
+    cart.forEach((item, index) => {
+
+        let itemTotal =
+            item.price * item.quantity;
+
+        total += itemTotal;
+
+
+        container.innerHTML += `
+
+            <div class="cart-item">
+
+                <h3>${item.name}</h3>
+
+                <p>
+                    ₹${item.price}
+                </p>
+
+                <button
+                    onclick="decrease(${index})">
+                    -
+                </button>
+
+                <span>
+                    ${item.quantity}
+                </span>
+
+                <button
+                    onclick="increase(${index})">
+                    +
+                </button>
+
+                <p>
+                    ₹${itemTotal}
+                </p>
+
+            </div>
+
+        `;
+
+    });
+
+
+    document.getElementById("total")
+        .innerText = total;
+
+}
+
+
+// INCREASE
+
+function increase(index) {
+
+    cart[index].quantity++;
+
+    saveCart();
+
+}
+
+
+// DECREASE
+
+function decrease(index) {
+
+    if (cart[index].quantity > 1) {
+
+        cart[index].quantity--;
+
+    } else {
+
+        cart.splice(index, 1);
+
+    }
+
+    saveCart();
+
+}
+
+
+// SAVE
+
+function saveCart() {
+
+    localStorage.setItem(
+        "cart",
+        JSON.stringify(cart)
+    );
+
+    displayCart();
+
+}
+
+
+// PREPARE ORDER
+
+function prepareOrder() {
+
+    document.getElementById("itemsInput").value =
+        JSON.stringify(cart);
+
+    let total = 0;
+
+    cart.forEach(item => {
+
+        total +=
+            item.price * item.quantity;
+
+    });
+
+    document.getElementById("totalInput").value =
+        total;
+
+    localStorage.removeItem("cart");
+
+}
+
+
+displayCart();
+
+</script>
+
+
+</body>
+
+</html>
