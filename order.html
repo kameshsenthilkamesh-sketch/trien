@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Order Confirmed</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="success-box">
+
+    <h1>✅ Order Confirmed!</h1>
+
+
+    <h2>
+        Order ID:
+        <strong>{{ order["order_id"] }}</strong>
+    </h2>
+
+
+    <p>
+        Total Amount:
+        ₹{{ order["total"] }}
+    </p>
+
+
+    <p>
+        Status:
+        🟡 {{ order["status"] }}
+    </p>
+
+
+    <p>
+        Estimated Pickup Time:
+        <strong>15 minutes</strong>
+    </p>
+
+
+    <a href="/track/{{ order['order_id'] }}">
+
+        <button>
+            Track Order
+        </button>
+
+    </a>
+
+
+    <br><br>
+
+
+    <a href="/menu">
+        Order More
+    </a>
+
+</div>
+
+
+</body>
+
+</html>
