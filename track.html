@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+    <title>Track Order</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+
+<body>
+
+
+<div class="tracking">
+
+    <h1>
+        Track Order
+    </h1>
+
+
+    <h2>
+        {{ order["order_id"] }}
+    </h2>
+
+
+    <div class="status">
+
+        <div class="active">
+            ✅ Order Received
+        </div>
+
+
+        <div>
+            🍳 Preparing
+        </div>
+
+
+        <div>
+            📦 Ready
+        </div>
+
+
+        <div>
+            🎉 Collected
+        </div>
+
+    </div>
+
+
+    <h3>
+        Current Status:
+    </h3>
+
+
+    <p>
+        {{ order["status"] }}
+    </p>
+
+
+    <a href="/menu">
+
+        <button>
+            Back to Menu
+        </button>
+
+    </a>
+
+</div>
+
+
+</body>
+
+</html>
