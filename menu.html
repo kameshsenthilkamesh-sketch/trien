@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>Canteen Menu</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<nav>
+
+    <h2>🍴 KPRIET Canteen</h2>
+
+    <a href="/">Home</a>
+
+    <button onclick="goToCart()">
+        🛒 Cart
+        <span id="cartCount">0</span>
+    </button>
+
+</nav>
+
+
+<h1 class="page-title">
+    Today's Menu
+</h1>
+
+
+<div class="menu-container">
+
+    {% for food in foods %}
+
+    <div class="food-card">
+
+        <div class="food-image">
+            🍽️
+        </div>
+
+        <h2>
+            {{ food["name"] }}
+        </h2>
+
+        <p class="price">
+            ₹{{ food["price"] }}
+        </p>
+
+        <button onclick="addToCart(
+            '{{ food["name"] }}',
+            {{ food["price"] }}
+        )">
+
+            Add to Cart
+
+        </button>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+<script src="{{ url_for('static', filename='script.js') }}"></script>
+
+</body>
+
+</html>
